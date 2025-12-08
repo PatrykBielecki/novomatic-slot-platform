@@ -1,5 +1,6 @@
 from behave import given
 from application.controllers import GameController
+from tests.helpers import remember
 
 @given("API client is initialized")
 def step_init(context):
@@ -17,4 +18,4 @@ def step_player_low(context, amount):
 
 @given('I remember the player balance as "{key}"')
 def step_remember(context, key):
-    context.memory[key] = context.player.balance
+    remember(context, key, context.player.balance)
