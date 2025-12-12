@@ -32,8 +32,8 @@ class UserRepository:
             bonus_spins=int(u.get("bonus_spins", 0)),
         )
 
-    def update_balance(self, user_id: str, new_balance: float):
-        r = self.client.put(f"/users/{user_id}", json={"balance": new_balance})
+    def update_balance(self, player_id: str, new_balance: float):
+        r = self.client.put(f"/users/{player_id}", json={"balance": new_balance})
         r.raise_for_status()
 
 
