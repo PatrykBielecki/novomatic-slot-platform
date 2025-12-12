@@ -2,11 +2,17 @@ from dataclasses import dataclass
 
 @dataclass
 class Player:
-    id: str
+    player_id: str
     name: str
     balance: float
     initial_balance: float
     bonus_spins: int = 0
+
+    def has_active_bonus(self) -> bool:
+        return self.bonus_spins > 0 
+    
+    def bonus_spins_remaining(self) -> int:
+        return self.bonus_spins
 
 
 class SpinResult:

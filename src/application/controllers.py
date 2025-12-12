@@ -32,3 +32,4 @@ class GameController:
 
     def make_bonus_spin(self, pid, bet):
         return self.game_service.make_bonus_spin(pid, bet)
+
