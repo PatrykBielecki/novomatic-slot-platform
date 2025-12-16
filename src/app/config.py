@@ -1,1 +1,1 @@
-MOCKAPI_BASE_URL = "https://690cb8c2a6d92d83e84f1d7a.mockapi.io/api"
+MOCKAPI_BASE_URL = "https://6928596cb35b4ffc501557b5.mockapi.io/api/v1"

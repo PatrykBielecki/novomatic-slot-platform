@@ -11,7 +11,7 @@ class UserRepository:
         data = r.json()
         return [
             Player(
-                id=u["id"],
+                player_id=u["player_id"],
                 name=u["name"],
                 balance=float(u["balance"]),
                 initial_balance=float(u.get("initial_balance", u["balance"])),
@@ -20,20 +20,20 @@ class UserRepository:
             for u in data
         ]
 
-    def get_by_id(self, user_id: str):
-        r = self.client.get(f"/users/{user_id}")
+    def get_by_id(self, player_id: str):
+        r = self.client.get(f"/users/{player_id}")
         r.raise_for_status()
         u = r.json()
         return Player(
-            id=u["id"],
+            player_id=u["player_id"],
             name=u["name"],
             balance=float(u["balance"]),
             initial_balance=float(u.get("initial_balance", u["balance"])),
             bonus_spins=int(u.get("bonus_spins", 0)),
         )
 
-    def update_balance(self, user_id: str, new_balance: float):
-        r = self.client.put(f"/users/{user_id}", json={"balance": new_balance})
+    def update_balance(self, player_id: str, new_balance: float):
+        r = self.client.put(f"/users/{player_id}", json={"balance": new_balance})
         r.raise_for_status()
 
 
@@ -52,3 +52,19 @@ class RoundRepository:
             win_amount=float(d["win_amount"]),
             casino_profit=float(d["casino_profit"]),
         )
+    
+    def list_rounds_for_player(self, player_id: str):
+        r = self.client.get(f"/rounds?player_id={player_id}") 
+        r.raise_for_status()
+        d = r.json()
+        
+        return [
+            Round(
+                id=rd["id"],
+                player_id=rd["player_id"],
+                bet_amount=float(rd["bet_amount"]),
+                win_amount=float(rd["win_amount"]),
+                casino_profit=float(rd["casino_profit"]),
+            )
+            for rd in d
+        ]
