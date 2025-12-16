@@ -16,3 +16,21 @@ def step_spin_success(context):
 def step_balance_updated(context):
     refreshed = context.controller.get_player(context.player.id)
     assert refreshed.balance == context.last_spin.balance_after
+
+@then("the player balance is calculated correctly after the spin")
+def step_balance_updated_correctly(context):
+    refreshed = context.controller.get_player(context.player.player_id)
+    bet_amount = context.last_spin.bet_amount
+    win_amount = context.last_spin.win_amount  
+    expected_balance = context.memory['initial_balance'] - bet_amount + win_amount
+    actual_balance = refreshed.balance
+
+    assert actual_balance == expected_balance, f"Expected balance: {expected_balance}, actual balance: {actual_balance}"
+
+@then("the player real balance should not be lower than '{key}'")
+def step_balance_not_lower(context, key):
+    refreshed = context.controller.get_player(context.player.player_id)
+    before = context.memory[key]
+    after = refreshed.balance
+
+    assert after >= before, f"Expected balance >= {before}, got {after}"
